@@ -1,0 +1,12 @@
+entities:
+
+- name: nas.FsManager
+  path: FsManager
+  connections:
+  - target: @ROOTFS_ENTITY@
+    id: @ROOTFS_ENTITY@
+  env:
+    VFS_FILESYSTEM_BACKEND: client:@ROOTFS_ENTITY@
+@INIT_FsManager_ENTITY_ENV@
+
+@INIT_EXTERNAL_ENTITIES@
