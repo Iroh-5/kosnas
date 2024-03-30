@@ -10,7 +10,9 @@ include (platform/nk)
 find_package (vfs REQUIRED)
 include_directories (${vfs_INCLUDE})
 
-find_package (fmt)
+find_package (blkdev REQUIRED)
+find_package (LWEXT4 REQUIRED)
+find_package (fmt REQUIRED)
 find_package (precompiled_vfs REQUIRED)
 find_package (usb REQUIRED)
 find_package (sdcard REQUIRED)
@@ -28,8 +30,9 @@ set (VULN_COMPILER_FLAGS "\
     -Wsign-conversion -Wformat=2 -Wformat-security -Werror=format-security \
     -fsanitize=undefined -fsanitize-undefined-trap-on-error")
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${VULN_COMPILER_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VULN_COMPILER_FLAGS}")
+set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} ${VULN_COMPILER_FLAGS}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VULN_COMPILER_FLAGS}")
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/common/")
 
 add_subdirectory (fs_service)
 

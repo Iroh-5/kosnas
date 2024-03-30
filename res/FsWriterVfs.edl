@@ -1,0 +1,6 @@
+entity nas.FsWriterVfs
+
+components
+{
+    vfs: kl.Vfs
+}

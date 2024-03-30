@@ -14,7 +14,9 @@ else ()
     set (ENTITIES
             FsReaderEntity
             FsWriterEntity
-            FsProxy)
+            FsProxy
+            FsReaderVfs
+            FsWriterVfs)
 endif ()
 
 set (FS_IMG_SIZE 64)
