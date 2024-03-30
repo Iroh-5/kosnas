@@ -10,6 +10,7 @@ include (platform/nk)
 find_package (vfs REQUIRED)
 include_directories (${vfs_INCLUDE})
 
+find_package (fmt)
 find_package (precompiled_vfs REQUIRED)
 find_package (usb REQUIRED)
 find_package (sdcard REQUIRED)
@@ -30,7 +31,7 @@ set (VULN_COMPILER_FLAGS "\
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${VULN_COMPILER_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VULN_COMPILER_FLAGS}")
 
-add_subdirectory (fs)
+add_subdirectory (fs_service)
 
 if (CMAKE_BUILD_TESTS)
     add_subdirectory (test)

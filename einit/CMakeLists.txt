@@ -11,7 +11,10 @@ if (CMAKE_BUILD_TESTS)
 else ()
     set (SECURITY_PSL_FILE "src/security.psl.in")
     set (INIT_FILE "src/init.yaml.in")
-    set (ENTITIES FsManagerEntity)
+    set (ENTITIES
+            FsReaderEntity
+            FsWriterEntity
+            FsProxy)
 endif ()
 
 set (FS_IMG_SIZE 64)

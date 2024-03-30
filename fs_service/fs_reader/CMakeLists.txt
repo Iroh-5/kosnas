@@ -1,4 +1,4 @@
-project (fs)
+project (FsWriter)
 
 add_subdirectory (lib)
 

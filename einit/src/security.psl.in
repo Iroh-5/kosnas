@@ -5,7 +5,8 @@ use nk.base._
 use EDL Einit
 use EDL kl.core.Core
 
-use EDL nas.FsManager
+use EDL nas.FsReader
+use EDL nas.FsWriter
 use EDL kl.VfsRamFs
 
 @INIT_EXTERNAL_ENTITIES@
