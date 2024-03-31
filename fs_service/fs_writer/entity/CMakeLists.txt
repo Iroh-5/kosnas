@@ -2,10 +2,10 @@ project (FsWriterEntity)
 
 include (vfs_server/custom_vfs_server)
 
-nk_build_edl_files (fs_writer_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/FsWriter.edl")
+nk_build_edl_files (fs_writer_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/FsWriterEntity.edl")
 
 set (VFS_SERVER_TARGET FsWriterVfs)
-set (VFS_SERVER_PART 0)
+set (VFS_SERVER_PART 1)
 
 create_custom_vfs_server (${VFS_SERVER_TARGET} ${VFS_SERVER_PART})
 

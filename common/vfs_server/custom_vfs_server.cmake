@@ -11,7 +11,12 @@ function (create_custom_vfs_server TARGET_NAME PARTITION)
     add_dependencies           (${TARGET_NAME} ${TARGET_NAME}_edl)
     target_compile_features    (${TARGET_NAME} PRIVATE cxx_std_17)
     target_compile_definitions (${TARGET_NAME} PRIVATE PARTITION=${PARTITION})
-    set_target_properties      (${TARGET_NAME} PROPERTIES LINK_FLAGS ${VULN_LDFLAGS})
+
+    set_target_properties (
+        ${TARGET_NAME}
+        PROPERTIES
+            LINK_FLAGS ${VULN_LDFLAGS}
+            ${blkdev_ENTITY}_REPLACEMENT ${ramdisk_ENTITY})
 
     target_link_libraries (
         ${TARGET_NAME}

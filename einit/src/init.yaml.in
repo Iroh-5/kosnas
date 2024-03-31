@@ -1,21 +1,29 @@
 entities:
 
-- name: nas.FsReader
-  path: FsReader
+- name: nas.FsReaderEntity
+  path: FsReaderEntity
   connections:
-  - target: @ROOTFS_ENTITY@
-    id: @ROOTFS_ENTITY@
-  env:
-    VFS_FILESYSTEM_BACKEND: client:@ROOTFS_ENTITY@
+  - target: nas.FsReaderVfs
+    id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_FsReader_ENTITY_ENV@
 
-- name: nas.FsWriter
-  path: FsWriter
+- name: nas.FsWriterEntity
+  path: FsWriterEntity
   connections:
-  - target: @ROOTFS_ENTITY@
-    id: @ROOTFS_ENTITY@
-  env:
-    VFS_FILESYSTEM_BACKEND: client:@ROOTFS_ENTITY@
+  - target: nas.FsWriterVfs
+    id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_FsWriter_ENTITY_ENV@
+
+- name: nas.FsProxyEntity
+  path: FsProxyEntity
+@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
+
+- name: nas.FsReaderVfs
+  path: FsReaderVfs
+@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
+
+- name: nas.FsWriterVfs
+  path: FsWriterVfs
+@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
 
 @INIT_EXTERNAL_ENTITIES@

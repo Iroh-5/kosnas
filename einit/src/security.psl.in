@@ -5,12 +5,11 @@ use nk.base._
 use EDL Einit
 use EDL kl.core.Core
 
-use EDL nas.FsReader
-use EDL nas.FsWriter
+use EDL nas.FsReaderEntity
+use EDL nas.FsWriterEntity
+use EDL nas.FsProxyEntity
 use EDL nas.FsReaderVfs
 use EDL nas.FsWriterVfs
-
-use EDL kl.VfsRamFs
 
 @INIT_EXTERNAL_ENTITIES@
 

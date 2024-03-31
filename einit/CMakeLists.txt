@@ -14,33 +14,25 @@ else ()
     set (ENTITIES
             FsReaderEntity
             FsWriterEntity
-            FsProxy
+            FsProxyEntity
             FsReaderVfs
             FsWriterVfs)
 endif ()
 
 set (FS_IMG_SIZE 64)
-if (ROOTFS_SDCARD)
-    set (ROOTFS_ENTITY "kl.VfsSdCardFs")
-    set (FS_BACKEND ${precompiled_vfsVfsSdCardFs})
-    set (FS_IMAGE sdcard0.img)
-    set (FS_IMG_FORMAT fat32)
-else()
-    set (ROOTFS_ENTITY "kl.VfsRamFs")
-    set (FS_BACKEND ${precompiled_vfsVfsRamFs})
-    set (FS_IMAGE ramdisk0.img)
-    set (FS_IMG_FORMAT ext4)
-    set (FILES ${CMAKE_BINARY_DIR}/einit/${FS_IMAGE})
-endif()
+set (FS_IMG_FORMAT fat32)
+set (FILES ${CMAKE_BINARY_DIR}/einit/${FS_IMAGE})
 
 add_custom_target (${FS_IMAGE}
     COMMAND  ${KL_SDK_ROOT_PATH}/common/prepare_hdd_img.sh
-        -d   ${CMAKE_SOURCE_DIR}/res/hdd
+        -%1  50
+        -%2  50
+        -f1  "ext2"
+        -f2  "ext2"
+        -p1  ${CMAKE_SOURCE_DIR}/res/hdd/p1
+        -p2  ${CMAKE_SOURCE_DIR}/res/hdd/p2
         -s   ${FS_IMG_SIZE}
-        -f   ${FS_IMG_FORMAT}
         -img ${FS_IMAGE})
-
-set (ENTITIES ${ENTITIES} ${FS_BACKEND})
 
 build_kos_hw_image (kos-image
                     EINIT_ENTITY EinitHw

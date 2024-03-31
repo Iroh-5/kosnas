@@ -2,7 +2,7 @@ project (FsReaderEntity)
 
 include (vfs_server/custom_vfs_server)
 
-nk_build_edl_files (fs_reader_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/FsReader.edl")
+nk_build_edl_files (fs_reader_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/FsReaderEntity.edl")
 
 set (VFS_SERVER_TARGET FsReaderVfs)
 set (VFS_SERVER_PART 0)

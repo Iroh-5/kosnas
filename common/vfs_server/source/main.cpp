@@ -25,19 +25,27 @@ constexpr std::string_view Blkdev{"ramdisk0"};
 
 bool MountFileSystem(unsigned partitionId)
 {
-    const auto fsPath{fmt::format("{}_p{}", Blkdev, partitionId)};
+    const auto fsPath{fmt::format("{},{}", Blkdev, partitionId)};
 
     if (mount(fsPath.c_str(), MountPoint.data(), FilesystemType.data(), 0, ""))
     {
-        ERROR(CUSTOM_VFS_SERVER
+        ERROR(
+            CUSTOM_VFS_SERVER,
             "Failed to mount %s, %s, %s. Error %s",
             fsPath.c_str(),
-            MountPoint,
-            FilesystemType,
+            MountPoint.data(),
+            FilesystemType.data(),
             strerror(errno));
 
         return false;
     }
+
+    INFO(
+        CUSTOM_VFS_SERVER,
+        "Successfully mounted %s, %s, %s",
+        fsPath.c_str(),
+        MountPoint.data(),
+        FilesystemType.data());
 
     return true;
 }
@@ -58,10 +66,14 @@ void _vfs_server_set_main_thread_routine(_vfs_server_thread_routine_t func,
 
 int main()
 {
-    if (MountFileSystem(PARTITION))
+    DEBUG(CUSTOM_VFS_SERVER, "Start mounting filesystem");
+
+    if (!MountFileSystem(PARTITION))
     {
         return EXIT_FAILURE;
     }
+
+    DEBUG(CUSTOM_VFS_SERVER, "Filesystem successfully mounted");
 
     if (threadRoutine == nullptr)
     {
@@ -69,6 +81,8 @@ int main()
 
         return EXIT_FAILURE;
     }
+
+    INFO(CUSTOM_VFS_SERVER, "Starting main thread routine...");
 
     (*threadRoutine)(threadRoutineArg);
 

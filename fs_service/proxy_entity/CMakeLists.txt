@@ -1,6 +1,6 @@
-project (FsProxy)
+project (FsProxyEntity)
 
-nk_build_edl_files (fs_proxy_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/FsProxy.edl")
+nk_build_edl_files (fs_proxy_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/FsProxyEntity.edl")
 
 add_executable             (${PROJECT_NAME} source/proxy_entity.cpp ${EDL_FILES})
 add_dependencies           (${PROJECT_NAME} fs_proxy_edl)
