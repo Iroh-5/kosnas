@@ -57,6 +57,7 @@ nk_build_idl_files (
     IDL "${CMAKE_SOURCE_DIR}/res/CommonTypes.idl")
 
 add_subdirectory (common)
+add_subdirectory (auth_service)
 add_subdirectory (fs_service)
 
 if (CMAKE_BUILD_TESTS)

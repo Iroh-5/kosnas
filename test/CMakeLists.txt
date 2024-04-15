@@ -7,9 +7,10 @@ find_package (GTest REQUIRED)
 set (SOURCES
     fs_test_common.cpp
     fs_reader_test.cpp
-    fs_writer_test.cpp)
+    fs_writer_test.cpp
+    cred_storage_reader_test.cpp)
 
-set (LIBS GTest::gtest_main FsReaderLib FsWriterLib FsCommonLib)
+set (LIBS GTest::gtest_main FsReaderLib FsWriterLib FsCommonLib CredStorageReaderLib)
 
 nk_build_edl_files (test_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/TestEntity.edl")
 
@@ -27,7 +28,8 @@ target_include_directories (
     ${PROJECT_NAME}
     PRIVATE
         ${CMAKE_SOURCE_DIR}/fs_service
-        ${CMAKE_SOURCE_DIR}/fs_service/common/include)
+        ${CMAKE_SOURCE_DIR}/fs_service/common/include
+        ${CMAKE_SOURCE_DIR}/auth_service)
 
 set_target_properties (
     ${PROJECT_NAME}
