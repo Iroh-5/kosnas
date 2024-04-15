@@ -2,7 +2,23 @@ project (FsWriterEntity)
 
 include (vfs_server/custom_vfs_server)
 
-nk_build_edl_files (fs_writer_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/FsWriterEntity.edl")
+nk_build_idl_files (
+    fs_writer_idl
+    NK_MODULE "nas"
+    IDL "${CMAKE_SOURCE_DIR}/res/FsWriter.idl")
+add_dependencies (fs_writer_idl common_types_idl)
+
+nk_build_cdl_files (
+    fs_writer_cdl
+    IDL_TARGET fs_writer_idl
+    NK_MODULE "nas"
+    CDL "${CMAKE_SOURCE_DIR}/res/FsWriter.cdl")
+
+nk_build_edl_files (
+    fs_writer_edl
+    CDL_TARGET fs_writer_cdl
+    NK_MODULE "nas"
+    EDL "${CMAKE_SOURCE_DIR}/res/FsWriterEntity.edl")
 
 set (VFS_SERVER_TARGET FsWriterVfs)
 set (VFS_SERVER_PART 1)

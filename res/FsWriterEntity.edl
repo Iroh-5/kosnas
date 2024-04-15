@@ -1,1 +1,5 @@
 entity nas.FsWriterEntity
+
+components {
+    FsWriterComponent: nas.FsWriter
+}

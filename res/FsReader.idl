@@ -1,0 +1,10 @@
+package nas.FsReader
+
+import nas.CommonTypes
+
+interface {
+    Init(in FilePathString filePathString, out Retcode rc);
+
+    InitiateFileTransmission(in FilePathString filePathString, out SizeT fileSize, out Retcode rc);
+    TransmitFileData(out DataBuffer dataBuffer, in SizeT dataSize, out Retcode rc);
+}

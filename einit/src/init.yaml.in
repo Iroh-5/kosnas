@@ -16,7 +16,12 @@ entities:
 
 - name: nas.FsProxyEntity
   path: FsProxyEntity
-@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
+  connections:
+  - target: nas.FsReaderEntity
+    id: FsReaderConnection
+  - target: nas.FsWriterEntity
+    id: FsWriterConnection
+@INIT_FsReaderVfs_ENTITY_CONNECTIONS+@
 
 - name: nas.FsReaderVfs
   path: FsReaderVfs

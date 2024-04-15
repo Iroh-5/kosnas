@@ -1,0 +1,5 @@
+component nas.FsWriter
+
+endpoints {
+    FsWriter: nas.FsWriter
+}

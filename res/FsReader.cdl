@@ -1,0 +1,5 @@
+component nas.FsReader
+
+endpoints {
+    FsReader: nas.FsReader
+}

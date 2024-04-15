@@ -1,0 +1,10 @@
+package nas.FsWriter
+
+import nas.CommonTypes
+
+interface {
+    Init(in FilePathString filePathString, out Retcode rc);
+
+    InitiateFileReceit(in FilePathString filePathString, in SizeT fileSize, out Retcode rc);
+    ReceiveFileData(in DataBuffer dataBuffer, out Retcode rc);
+}

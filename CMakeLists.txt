@@ -34,6 +34,11 @@ set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} ${VULN_COMPILER_FLAGS}")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VULN_COMPILER_FLAGS}")
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/common/")
 
+nk_build_idl_files (
+    common_types_idl
+    NK_MODULE "nas"
+    IDL "${CMAKE_SOURCE_DIR}/res/CommonTypes.idl")
+
 add_subdirectory (fs_service)
 
 if (CMAKE_BUILD_TESTS)

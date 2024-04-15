@@ -1,0 +1,10 @@
+package nas.CommonTypes
+
+typedef UInt32 Retcode;
+typedef UInt32 SizeT;
+
+const UInt16 FilePathStringSize = 512;
+typedef string<FilePathStringSize> FilePathString;
+
+const UInt16 DataBufferSize = 1024;
+typedef string<DataBufferSize> DataBuffer;

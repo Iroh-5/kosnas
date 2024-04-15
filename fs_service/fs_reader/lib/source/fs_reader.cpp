@@ -64,6 +64,8 @@ catch (const std::exception& e)
 Retcode FsReader::TransmitFileData(std::vector<std::uint8_t>& data, std::size_t dataSize) noexcept
 try
 {
+    // TODO: Check that dataSize <= max data size which can be transferred via IPC
+
     if (m_currentState != State::FILE_TRANSMISSION)
     {
         DEBUG(FS_READER, "%s was called in invalid state (%d)", __func__, static_cast<int>(m_currentState));

@@ -21,6 +21,7 @@ endif ()
 
 set (FS_IMG_SIZE 64)
 set (FS_IMG_FORMAT fat32)
+set (FS_IMAGE ramdisk0.img)
 set (FILES ${CMAKE_BINARY_DIR}/einit/${FS_IMAGE})
 
 add_custom_target (${FS_IMAGE}
@@ -40,9 +41,7 @@ build_kos_hw_image (kos-image
                     SECURITY_PSL ${SECURITY_PSL_FILE}
                     IMAGE_FILES ${ENTITIES} ${FILES})
 
-if (NOT ROOTFS_SDCARD)
-    add_dependencies (kos-image ${FS_IMAGE})
-endif ()
+add_dependencies (kos-image ${FS_IMAGE})
 
 set_target_properties (
     EinitHw
