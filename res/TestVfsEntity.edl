@@ -1,0 +1,6 @@
+entity nas.TestVfsEntity
+
+components
+{
+    vfs: kl.Vfs
+}

@@ -27,7 +27,7 @@ function (create_custom_vfs_server TARGET_NAME PARTITION)
         ${TARGET_NAME}
         PROPERTIES
             LINK_FLAGS ${VULN_LDFLAGS}
-            ${blkdev_ENTITY}_REPLACEMENT ${VFS_ENTITY})
+            ${blkdev_ENTITY}_REPLACEMENT ${VFS_ENTITY_TGT})
 
     target_link_libraries (
         ${TARGET_NAME}

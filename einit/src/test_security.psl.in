@@ -6,8 +6,7 @@ use EDL Einit
 use EDL kl.core.Core
 
 use EDL nas.TestEntity
-use EDL kl.VfsRamFs
-use EDL kl.VfsSdCardFs
+use EDL nas.TestVfsEntity
 
 @INIT_EXTERNAL_ENTITIES@
 
