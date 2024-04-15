@@ -48,6 +48,9 @@ Retcode FsReaderEntity::Run() noexcept
     nas_FsReaderEntity_entity_req req;
     nas_FsReaderEntity_entity_res res;
 
+    char reqBuffer[nas_FsReaderEntity_entity_req_arena_size];
+    nk_arena reqArena = NK_ARENA_INITIALIZER(reqBuffer, reqBuffer + sizeof(reqBuffer));
+
     char resBuffer[nas_FsReaderEntity_entity_res_arena_size];
     nk_arena resArena = NK_ARENA_INITIALIZER(resBuffer, resBuffer + sizeof(resBuffer));
 
@@ -56,14 +59,15 @@ Retcode FsReaderEntity::Run() noexcept
         nk_req_reset(&req);
         nk_arena_reset(&resArena);
 
-        auto rc{nk_transport_recv(&transport.base, &req.base_, nullptr)};
+        auto rc{nk_transport_recv(&transport.base, &req.base_, &reqArena)};
         if (rc == NK_EOK)
         {
-            nas_FsReaderEntity_entity_dispatch(&entity, &req.base_, nullptr, &res.base_, &resArena);
+            nas_FsReaderEntity_entity_dispatch(&entity, &req.base_, &reqArena, &res.base_, &resArena);
         }
         else
         {
             ERROR(FS_READER_ENTITY, "nk_transport_recv failed: %d", rc);
+            continue;
         }
 
         rc = nk_transport_reply(&transport.base, &res.base_, &resArena);

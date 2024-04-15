@@ -56,6 +56,7 @@ nk_build_idl_files (
     NK_MODULE "nas"
     IDL "${CMAKE_SOURCE_DIR}/res/CommonTypes.idl")
 
+add_subdirectory (common)
 add_subdirectory (fs_service)
 
 if (CMAKE_BUILD_TESTS)
