@@ -21,7 +21,7 @@ namespace {
 
 constexpr std::string_view MountPoint{"/"};
 constexpr std::string_view FilesystemType{"ext2"};
-constexpr std::string_view Blkdev{"ramdisk0"};
+constexpr std::string_view Blkdev{DISK};
 
 bool MountFileSystem(unsigned partitionId)
 {

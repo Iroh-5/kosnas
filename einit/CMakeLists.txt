@@ -19,11 +19,6 @@ else ()
             FsWriterVfs)
 endif ()
 
-set (FS_IMG_SIZE 64)
-set (FS_IMG_FORMAT fat32)
-set (FS_IMAGE ramdisk0.img)
-set (FILES ${CMAKE_BINARY_DIR}/einit/${FS_IMAGE})
-
 add_custom_target (${FS_IMAGE}
     COMMAND  ${KL_SDK_ROOT_PATH}/common/prepare_hdd_img.sh
         -%1  50
@@ -45,5 +40,19 @@ add_dependencies (kos-image ${FS_IMAGE})
 
 set_target_properties (
     EinitHw
+    PROPERTIES
+        LINK_FLAGS ${VULN_LDFLAGS})
+
+build_kos_qemu_image (kos-qemu-image
+                      EINIT_ENTITY EinitQemu
+                      CONNECTIONS_CFG "src/init.yaml.in"
+                      SECURITY_PSL ${SECURITY_PSL_FILE}
+                      QEMU_FLAGS "${QEMU_FLAGS}"
+                      IMAGE_FILES ${ENTITIES} ${FILES})
+
+add_dependencies (kos-qemu-image ${FS_IMAGE})
+
+set_target_properties (
+    EinitQemu
     PROPERTIES
         LINK_FLAGS ${VULN_LDFLAGS})

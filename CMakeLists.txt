@@ -7,15 +7,32 @@ initialize_platform (FORCE_STATIC)
 
 include (platform/nk)
 
+option (HW OFF)
+
 find_package (vfs REQUIRED)
 include_directories (${vfs_INCLUDE})
 
 find_package (blkdev REQUIRED)
 find_package (LWEXT4 REQUIRED)
 find_package (fmt REQUIRED)
-find_package (precompiled_vfs REQUIRED)
-find_package (usb REQUIRED)
-find_package (sdcard REQUIRED)
+
+if (HW)
+    find_package (sdcard REQUIRED)
+
+    set (FS_IMG_SIZE 64)
+    set (FS_IMG_FORMAT fat32)
+    set (FS_IMAGE ramdisk0.img)
+    set (VFS_ENTITY ${ramdisk_ENTITY})
+    set (FILES ${CMAKE_BINARY_DIR}/einit/${FS_IMAGE})
+else ()
+    find_package (sdcard REQUIRED)
+
+    set (FS_IMG_SIZE 64)
+    set (FS_IMG_FORMAT fat32)
+    set (FS_IMAGE sdcard0.img)
+    set (VFS_ENTITY ${sdcard_ENTITY})
+    set (QEMU_FLAGS "-drive file=${FS_IMAGE},if=sd,format=raw")
+endif ()
 
 set (VULN_LDFLAGS "\
     -Wl,-z,noexecstack \

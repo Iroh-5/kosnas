@@ -10,13 +10,24 @@ function (create_custom_vfs_server TARGET_NAME PARTITION)
     add_executable             (${TARGET_NAME} "${VFS_SERVER_SOURCES_DIR}/main.cpp")
     add_dependencies           (${TARGET_NAME} ${TARGET_NAME}_edl)
     target_compile_features    (${TARGET_NAME} PRIVATE cxx_std_17)
-    target_compile_definitions (${TARGET_NAME} PRIVATE PARTITION=${PARTITION})
+
+    if (HW)
+        set (DISK "ramdisk0")
+    else ()
+        set (DISK "mmc0")
+    endif ()
+
+    target_compile_definitions (
+        ${TARGET_NAME}
+        PRIVATE
+            DISK="${DISK}"
+            PARTITION=${PARTITION})
 
     set_target_properties (
         ${TARGET_NAME}
         PROPERTIES
             LINK_FLAGS ${VULN_LDFLAGS}
-            ${blkdev_ENTITY}_REPLACEMENT ${ramdisk_ENTITY})
+            ${blkdev_ENTITY}_REPLACEMENT ${VFS_ENTITY})
 
     target_link_libraries (
         ${TARGET_NAME}
