@@ -7,7 +7,6 @@ use EDL kl.core.Core
 
 use EDL nas.FsReaderEntity
 use EDL nas.FsWriterEntity
-use EDL nas.FsProxyEntity
 use EDL nas.FsReaderVfs
 use EDL nas.FsWriterVfs
 

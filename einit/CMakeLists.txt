@@ -21,7 +21,6 @@ else ()
     set (ENTITIES
             FsReaderEntity
             FsWriterEntity
-            FsProxyEntity
             FsReaderVfs
             FsWriterVfs)
 

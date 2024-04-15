@@ -14,15 +14,6 @@ entities:
     id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_FsWriter_ENTITY_ENV@
 
-- name: nas.FsProxyEntity
-  path: FsProxyEntity
-  connections:
-  - target: nas.FsReaderEntity
-    id: FsReaderConnection
-  - target: nas.FsWriterEntity
-    id: FsWriterConnection
-@INIT_FsReaderVfs_ENTITY_CONNECTIONS+@
-
 - name: nas.FsReaderVfs
   path: FsReaderVfs
 @INIT_FsReaderVfs_ENTITY_CONNECTIONS@
