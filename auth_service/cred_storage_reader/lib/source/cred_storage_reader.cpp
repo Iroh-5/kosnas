@@ -32,7 +32,11 @@ try
     const auto hashFileSize{fs::file_size(hashFilePath) - 1};
 
     std::ifstream hashFile{hashFilePath};
-    rtl_assert(hashFile.is_open());
+    if (!hashFile.is_open())
+    {
+        ERROR(CRED_STORAGE_READER, "Could not open file: %s", username.c_str());
+        return rcInternalError;
+    }
 
     std::string storedHash;
     storedHash.resize(hashFileSize);

@@ -8,9 +8,16 @@ set (SOURCES
     fs_test_common.cpp
     fs_reader_test.cpp
     fs_writer_test.cpp
-    cred_storage_reader_test.cpp)
+    cred_storage_reader_test.cpp
+    cred_storage_writer_test.cpp)
 
-set (LIBS GTest::gtest_main FsReaderLib FsWriterLib FsCommonLib CredStorageReaderLib)
+set (LIBS
+    GTest::gtest_main
+    FsReaderLib
+    FsWriterLib
+    FsCommonLib
+    CredStorageReaderLib
+    CredStorageWriterLib)
 
 nk_build_edl_files (test_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/TestEntity.edl")
 

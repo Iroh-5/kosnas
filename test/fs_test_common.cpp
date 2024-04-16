@@ -2,10 +2,16 @@
 
 #include <rtl/assert.h>
 
+#include <kos/trace.h>
+
+#include <filesystem>
 #include <fstream>
 #include <sstream>
+#include <string>
 
 namespace test {
+
+namespace fs = std::filesystem;
 
 std::string GetTmpDirPathStr()
 {
@@ -32,10 +38,27 @@ bool CheckFileContent(const fs::path& path, const std::string& fileContentToCmp)
 
     rtl_assert(ifs.is_open());
 
-    std::stringstream fileContent;
-    fileContent << ifs.rdbuf();
+    const auto fileSize{fs::file_size(path)};
 
-    return fileContent.str() == fileContentToCmp;
+    std::string fileContentStr;
+    fileContentStr.resize(fileSize);
+    ifs.read(
+        reinterpret_cast<decltype(ifs)::char_type*>(fileContentStr.data()),
+        static_cast<std::streamsize>(fileSize));
+
+    if (fileContentStr != fileContentToCmp)
+    {
+        ERROR(TEST_COMMON,
+            "File content does not match. Expected: %s (%u), got: %s (%u)",
+            fileContentToCmp.c_str(),
+            static_cast<unsigned>(fileContentToCmp.size()),
+            fileContentStr.c_str(),
+            static_cast<unsigned>(fileContentStr.size()));
+
+        return false;
+    }
+
+    return true;
 }
 
 } // namespace test
