@@ -12,6 +12,7 @@ namespace nas {
 FsReaderEntity& FsReaderEntity::Get()
 {
     static FsReaderEntity instance;
+
     return instance;
 }
 
@@ -57,6 +58,7 @@ Retcode FsReaderEntity::Run() noexcept
     while (true)
     {
         nk_req_reset(&req);
+        nk_arena_reset(&reqArena);
         nk_arena_reset(&resArena);
 
         auto rc{nk_transport_recv(&transport.base, &req.base_, &reqArena)};
