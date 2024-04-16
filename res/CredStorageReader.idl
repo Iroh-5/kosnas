@@ -1,0 +1,7 @@
+package nas.CredStorageReader
+
+import nas.CommonTypes
+
+interface {
+    Authenticate(in UserNameString username, in PasswordHashString passwordHash, out Retcode rc);
+}

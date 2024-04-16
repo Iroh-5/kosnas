@@ -1,0 +1,5 @@
+component nas.CredStorageReader
+
+endpoints {
+    CredStorageReader: nas.CredStorageReader
+}

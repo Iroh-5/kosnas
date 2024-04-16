@@ -25,10 +25,10 @@ set (VFS_SERVER_PART 1)
 
 create_custom_vfs_server (${VFS_SERVER_TARGET} ${VFS_SERVER_PART})
 
-add_executable             (${PROJECT_NAME} source/entity.cpp ${EDL_FILES})
-add_dependencies           (${PROJECT_NAME} ${VFS_SERVER_TARGET} fs_writer_edl)
-target_compile_features    (${PROJECT_NAME} PRIVATE cxx_std_17)
-target_link_libraries      (${PROJECT_NAME} FsWriterLib)
+add_executable          (${PROJECT_NAME} source/entity.cpp ${EDL_FILES})
+add_dependencies        (${PROJECT_NAME} ${VFS_SERVER_TARGET} fs_writer_edl)
+target_compile_features (${PROJECT_NAME} PRIVATE cxx_std_17)
+target_link_libraries   (${PROJECT_NAME} FsWriterLib)
 
 target_include_directories (
     ${PROJECT_NAME}

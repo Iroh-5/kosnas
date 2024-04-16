@@ -1,0 +1,5 @@
+entity nas.CredStorageReaderEntity
+
+components {
+    CredStorageReaderComponent: nas.CredStorageReader
+}

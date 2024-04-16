@@ -14,6 +14,9 @@ public:
     Retcode Run() noexcept;
 
 private:
+    FsReaderEntity() = default;
+
+private:
     static nk_err_t InitImpl(
         nas_FsReader* self,
         const nas_FsReader_Init_req* req,

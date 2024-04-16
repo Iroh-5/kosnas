@@ -1,0 +1,6 @@
+entity nas.CredStorageReaderVfs
+
+components
+{
+    vfs: kl.Vfs
+}

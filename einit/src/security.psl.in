@@ -7,7 +7,9 @@ use EDL kl.core.Core
 
 use EDL nas.FsReaderEntity
 use EDL nas.FsWriterEntity
+use EDL nas.CredStorageReaderEntity
 use EDL nas.FsReaderVfs
+use EDL nas.CredStorageReaderVfs
 use EDL nas.FsWriterVfs
 
 @INIT_EXTERNAL_ENTITIES@
