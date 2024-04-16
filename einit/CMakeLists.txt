@@ -22,9 +22,11 @@ else ()
             FsReaderEntity
             FsWriterEntity
             CredStorageReaderEntity
+            CredStorageWriterEntity
             FsReaderVfs
             FsWriterVfs
-            CredStorageReaderVfs)
+            CredStorageReaderVfs
+            CredStorageWriterVfs)
 
     add_custom_target (${FS_IMAGE}
         COMMAND  ${KL_SDK_ROOT_PATH}/common/prepare_hdd_img.sh

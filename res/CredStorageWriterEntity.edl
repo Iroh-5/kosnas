@@ -1,0 +1,5 @@
+entity nas.CredStorageWriterEntity
+
+components {
+    CredStorageWriterComponent: nas.CredStorageWriter
+}

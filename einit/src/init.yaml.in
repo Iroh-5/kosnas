@@ -21,16 +21,27 @@ entities:
     id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_CredStorageReaderEntity_ENTITY_ENV@
 
+- name: nas.CredStorageWriterEntity
+  path: CredStorageWriterEntity
+  connections:
+  - target: nas.CredStorageWriterVfs
+    id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
+@INIT_CredStorageWriterEntity_ENTITY_ENV@
+
 - name: nas.FsReaderVfs
   path: FsReaderVfs
+@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
+
+- name: nas.FsWriterVfs
+  path: FsWriterVfs
 @INIT_FsReaderVfs_ENTITY_CONNECTIONS@
 
 - name: nas.CredStorageReaderVfs
   path: CredStorageReaderVfs
 @INIT_CredStorageReaderVfs_ENTITY_CONNECTIONS@
 
-- name: nas.FsWriterVfs
-  path: FsWriterVfs
-@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
+- name: nas.CredStorageWriterVfs
+  path: CredStorageWriterVfs
+@INIT_CredStorageWriterVfs_ENTITY_CONNECTIONS@
 
 @INIT_EXTERNAL_ENTITIES@

@@ -1,0 +1,7 @@
+package nas.CredStorageWriter
+
+import nas.CommonTypes
+
+interface {
+    AddAuthEntry(in UserNameString username, in PasswordHashString passwordHash, out Retcode rc);
+}
