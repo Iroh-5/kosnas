@@ -1,0 +1,3 @@
+[submodule "picosha"]
+  path = auth_service/crypto_module/PicoSHA2
+  url = https://github.com/Iroh-5/PicoSHA2.git

@@ -5,6 +5,7 @@ include (vfs_server/custom_vfs_server)
 find_package (GTest REQUIRED)
 
 set (SOURCES
+    main.cpp
     fs_test_common.cpp
     fs_reader_test.cpp
     fs_writer_test.cpp
@@ -12,12 +13,13 @@ set (SOURCES
     cred_storage_writer_test.cpp)
 
 set (LIBS
-    GTest::gtest_main
+    GTest::gtest
     FsReaderLib
     FsWriterLib
     FsCommonLib
     CredStorageReaderLib
-    CredStorageWriterLib)
+    CredStorageWriterLib
+    PicoSHA2Test)
 
 nk_build_edl_files (test_edl NK_MODULE "nas" EDL "${CMAKE_SOURCE_DIR}/res/TestEntity.edl")
 
