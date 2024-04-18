@@ -9,11 +9,10 @@ use EDL nas.FsReaderEntity
 use EDL nas.FsWriterEntity
 use EDL nas.CredStorageReaderEntity
 use EDL nas.CredStorageWriterEntity
-use EDL nas.FsReaderVfs
-use EDL nas.FsWriterVfs
-use EDL nas.CredStorageReaderVfs
-use EDL nas.CredStorageWriterVfs
+use EDL nas.FsVfs
+use EDL nas.CredStorageVfs
 use EDL nas.CryptoModuleEntity
+use EDL nas.GatewayEntity
 
 @INIT_EXTERNAL_ENTITIES@
 

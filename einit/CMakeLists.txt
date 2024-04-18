@@ -23,11 +23,10 @@ else ()
             FsWriterEntity
             CredStorageReaderEntity
             CredStorageWriterEntity
-            FsReaderVfs
-            FsWriterVfs
-            CredStorageReaderVfs
-            CredStorageWriterVfs
-            CryptoModuleEntity)
+            FsVfs
+            CredStorageVfs
+            CryptoModuleEntity
+            GatewayEntity)
 
     add_custom_target (${FS_IMAGE}
         COMMAND  ${KL_SDK_ROOT_PATH}/common/prepare_hdd_img.sh

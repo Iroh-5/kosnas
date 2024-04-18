@@ -26,8 +26,7 @@ if (HW)
     set (FILES ${CMAKE_BINARY_DIR}/einit/${FS_IMAGE})
 else ()
     find_package (sdcard REQUIRED)
-
-    set (FS_IMG_SIZE 64)
+set (FS_IMG_SIZE 64)
     set (FS_IMG_FORMAT fat32)
     set (FS_IMAGE sdcard0.img)
     set (VFS_ENTITY_TGT ${sdcard_ENTITY})
@@ -59,6 +58,7 @@ nk_build_idl_files (
 add_subdirectory (common)
 add_subdirectory (auth_service)
 add_subdirectory (fs_service)
+add_subdirectory (gateway)
 
 if (CMAKE_BUILD_TESTS)
     add_subdirectory (test)

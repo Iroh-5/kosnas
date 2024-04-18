@@ -1,6 +1,0 @@
-entity nas.CredStorageWriterVfs
-
-components
-{
-    vfs: kl.Vfs
-}

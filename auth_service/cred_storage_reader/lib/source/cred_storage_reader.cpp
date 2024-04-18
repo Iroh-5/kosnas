@@ -29,7 +29,7 @@ try
         return rcResourceNotFound;
     }
 
-    const auto hashFileSize{fs::file_size(hashFilePath) - 1};
+    const auto hashFileSize{fs::file_size(hashFilePath)};
 
     std::ifstream hashFile{hashFilePath};
     if (!hashFile.is_open())

@@ -1,4 +1,6 @@
+#include "cred_storage_reader.hpp"
 #include "entity.hpp"
+#include "utils.hpp"
 
 #include <nas/CredStorageReaderEntity.edl.h>
 
@@ -19,7 +21,7 @@ CredStorageReaderEntity& CredStorageReaderEntity::Get()
 Retcode CredStorageReaderEntity::Run() noexcept
 {
     ServiceId iid;
-    Handle connHandle{ServiceLocatorRegister("CredStorageConnection", nullptr, 0, &iid)};
+    Handle connHandle{ServiceLocatorRegister("CredStorageReaderConnection", nullptr, 0, &iid)};
     if (connHandle == INVALID_HANDLE)
     {
         ERROR(CRED_STORAGE_READER_ENTITY, "ServiceLocatorRegister failed");
@@ -82,11 +84,16 @@ Retcode CredStorageReaderEntity::Run() noexcept
 
 nk_err_t CredStorageReaderEntity::AuthenticateImpl(
     [[maybe_unused]] nas_CredStorageReader* self,
-    [[maybe_unused]] const nas_CredStorageReader_Authenticate_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_CredStorageReader_Authenticate_res* res,
+    const nas_CredStorageReader_Authenticate_req* req,
+    const nk_arena* reqArena,
+    nas_CredStorageReader_Authenticate_res* res,
     [[maybe_unused]] nk_arena* resArena)
 {
+    const auto username{utils::GetArenaString(reqArena, &req->username)};
+    const auto passwordHash{utils::GetArenaString(reqArena, &req->passwordHash)};
+
+    res->rc = CredStorageReader::Get().Authenticate(username, passwordHash);
+
     return NK_EOK;
 }
 

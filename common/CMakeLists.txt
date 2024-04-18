@@ -1,4 +1,4 @@
-project (common)
+project (Common)
 
 set (SOURCES source/utils.cpp)
 

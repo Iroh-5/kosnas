@@ -1,7 +1,5 @@
 project (CredStorageWriterEntity)
 
-include (vfs_server/custom_vfs_server)
-
 nk_build_idl_files (
     cred_storage_writer_idl
     NK_MODULE "nas"
@@ -20,19 +18,15 @@ nk_build_edl_files (
     NK_MODULE "nas"
     EDL "${CMAKE_SOURCE_DIR}/res/CredStorageWriterEntity.edl")
 
-set (VFS_SERVER_TARGET CredStorageWriterVfs)
-set (VFS_SERVER_PART 3)
-
-create_custom_vfs_server (${VFS_SERVER_TARGET} ${VFS_SERVER_PART})
-
 add_executable          (${PROJECT_NAME} source/entity.cpp source/main.cpp ${EDL_FILES})
 add_dependencies        (${PROJECT_NAME} ${VFS_SERVER_TARGET} cred_storage_writer_edl)
 target_compile_features (${PROJECT_NAME} PRIVATE cxx_std_17)
-target_link_libraries   (${PROJECT_NAME} CredStorageWriterLib)
+target_link_libraries   (${PROJECT_NAME} CredStorageWriterLib Common)
 
 target_include_directories (
     ${PROJECT_NAME}
     PRIVATE
+        ${CMAKE_SOURCE_DIR}/common/include
         ${CMAKE_SOURCE_DIR}/auth_service/cred_storage_writer/lib/include
         ${CMAKE_SOURCE_DIR}/auth_service/cred_storage_writer/entity/include)
 

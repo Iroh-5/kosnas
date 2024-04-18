@@ -1,7 +1,5 @@
 project (FsReaderEntity)
 
-include (vfs_server/custom_vfs_server)
-
 nk_build_idl_files (
     fs_reader_idl
     NK_MODULE "nas"
@@ -19,11 +17,6 @@ nk_build_edl_files (
     CDL_TARGET fs_reader_cdl
     NK_MODULE "nas"
     EDL "${CMAKE_SOURCE_DIR}/res/FsReaderEntity.edl")
-
-set (VFS_SERVER_TARGET FsReaderVfs)
-set (VFS_SERVER_PART 0)
-
-create_custom_vfs_server (${VFS_SERVER_TARGET} ${VFS_SERVER_PART})
 
 add_executable             (${PROJECT_NAME} source/entity.cpp source/main.cpp ${EDL_FILES})
 add_dependencies           (${PROJECT_NAME} ${VFS_SERVER_TARGET} fs_reader_edl)

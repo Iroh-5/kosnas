@@ -1,4 +1,6 @@
+#include "cred_storage_writer.hpp"
 #include "entity.hpp"
+#include "utils.hpp"
 
 #include <nas/CredStorageWriterEntity.edl.h>
 
@@ -19,7 +21,7 @@ CredStorageWriterEntity& CredStorageWriterEntity::Get()
 Retcode CredStorageWriterEntity::Run() noexcept
 {
     ServiceId iid;
-    Handle connHandle{ServiceLocatorRegister("CredStorageConnection", nullptr, 0, &iid)};
+    Handle connHandle{ServiceLocatorRegister("CredStorageWriterConnection", nullptr, 0, &iid)};
     if (connHandle == INVALID_HANDLE)
     {
         ERROR(CRED_STORAGE_WRITER_ENTITY, "ServiceLocatorRegister failed");
@@ -82,11 +84,16 @@ Retcode CredStorageWriterEntity::Run() noexcept
 
 nk_err_t CredStorageWriterEntity::AddAuthEntryImpl(
     [[maybe_unused]] nas_CredStorageWriter* self,
-    [[maybe_unused]] const nas_CredStorageWriter_AddAuthEntry_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_CredStorageWriter_AddAuthEntry_res* res,
+    const nas_CredStorageWriter_AddAuthEntry_req* req,
+    const nk_arena* reqArena,
+    nas_CredStorageWriter_AddAuthEntry_res* res,
     [[maybe_unused]] nk_arena* resArena)
 {
+    const auto username{utils::GetArenaString(reqArena, &req->username)};
+    const auto passwordHash{utils::GetArenaString(reqArena, &req->passwordHash)};
+
+    res->rc = CredStorageWriter::Get().AddAuthEntry(username, passwordHash);
+
     return NK_EOK;
 }
 

@@ -1,4 +1,4 @@
-entity nas.FsWriterVfs
+entity nas.FsVfs
 
 components
 {

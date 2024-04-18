@@ -1,6 +1,6 @@
 package nas.CommonTypes
 
-typedef UInt32 Retcode;
+typedef SInt32 Retcode;
 typedef UInt32 SizeT;
 
 const UInt16 FilePathStringSize = 512;

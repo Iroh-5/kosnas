@@ -3,49 +3,52 @@ entities:
 - name: nas.FsReaderEntity
   path: FsReaderEntity
   connections:
-  - target: nas.FsReaderVfs
+  - target: nas.FsVfs
     id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_FsReader_ENTITY_ENV@
 
 - name: nas.FsWriterEntity
   path: FsWriterEntity
   connections:
-  - target: nas.FsWriterVfs
+  - target: nas.FsVfs
     id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_FsWriter_ENTITY_ENV@
 
 - name: nas.CredStorageReaderEntity
   path: CredStorageReaderEntity
   connections:
-  - target: nas.CredStorageReaderVfs
+  - target: nas.CredStorageVfs
     id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_CredStorageReaderEntity_ENTITY_ENV@
 
 - name: nas.CredStorageWriterEntity
   path: CredStorageWriterEntity
   connections:
-  - target: nas.CredStorageWriterVfs
+  - target: nas.CredStorageVfs
     id: {var: _VFS_CONNECTION_ID, include: vfs/defs.h}
 @INIT_CredStorageWriterEntity_ENTITY_ENV@
 
-- name: nas.FsReaderVfs
-  path: FsReaderVfs
-@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
+- name: nas.FsVfs
+  path: FsVfs
+@INIT_FsVfs_ENTITY_CONNECTIONS@
 
-- name: nas.FsWriterVfs
-  path: FsWriterVfs
-@INIT_FsReaderVfs_ENTITY_CONNECTIONS@
-
-- name: nas.CredStorageReaderVfs
-  path: CredStorageReaderVfs
-@INIT_CredStorageReaderVfs_ENTITY_CONNECTIONS@
-
-- name: nas.CredStorageWriterVfs
-  path: CredStorageWriterVfs
-@INIT_CredStorageWriterVfs_ENTITY_CONNECTIONS@
+- name: nas.CredStorageVfs
+  path: CredStorageVfs
+@INIT_CredStorageVfs_ENTITY_CONNECTIONS@
 
 - name: nas.CryptoModuleEntity
   path: CryptoModuleEntity
 @INIT_CryptoModuleEntity_ENTITY_CONNECTIONS@
+
+- name: nas.GatewayEntity
+  path: GatewayEntity
+  connections:
+  - target: nas.CredStorageReaderEntity
+    id: CredStorageReaderConnection
+  - target: nas.CredStorageWriterEntity
+    id: CredStorageWriterConnection
+  - target: nas.CryptoModuleEntity
+    id: CryptoModuleConnection
+@INIT_GatewayEntity_ENTITY_CONNECTIONS+@
 
 @INIT_EXTERNAL_ENTITIES@

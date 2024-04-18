@@ -1,6 +1,0 @@
-entity nas.FsReaderVfs
-
-components
-{
-    vfs: kl.Vfs
-}
