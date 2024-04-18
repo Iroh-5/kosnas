@@ -13,6 +13,7 @@ use EDL nas.FsReaderVfs
 use EDL nas.FsWriterVfs
 use EDL nas.CredStorageReaderVfs
 use EDL nas.CredStorageWriterVfs
+use EDL nas.CryptoModuleEntity
 
 @INIT_EXTERNAL_ENTITIES@
 

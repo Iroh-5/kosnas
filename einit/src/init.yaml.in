@@ -44,4 +44,8 @@ entities:
   path: CredStorageWriterVfs
 @INIT_CredStorageWriterVfs_ENTITY_CONNECTIONS@
 
+- name: nas.CryptoModuleEntity
+  path: CryptoModuleEntity
+@INIT_CryptoModuleEntity_ENTITY_CONNECTIONS@
+
 @INIT_EXTERNAL_ENTITIES@

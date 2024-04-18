@@ -1,0 +1,7 @@
+package nas.CryptoModule
+
+import nas.CommonTypes
+
+interface {
+    GetSHA256Hash(in UserNameString str, out PasswordHashString hash, out Retcode rc);
+}

@@ -1,0 +1,5 @@
+entity nas.CryptoModuleEntity
+
+components {
+    CryptoModuleComponent: nas.CryptoModule
+}
