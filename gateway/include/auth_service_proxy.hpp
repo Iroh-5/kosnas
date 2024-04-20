@@ -22,6 +22,11 @@ public:
 private:
     AuthServiceProxy();
 
+    Retcode GetPasswordHash(const std::string& password, std::string& passHash) noexcept;
+
+    Retcode CallAddAuthEntry    (const std::string username,  const std::string& passHash) noexcept;
+    Retcode CallAuthenticateUser(const std::string& username, const std::string& passHash) noexcept;
+
 private:
     NkKosTransport              m_readerTransport;
     nas_CredStorageReader_proxy m_readerProxy;

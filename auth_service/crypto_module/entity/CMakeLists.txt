@@ -21,11 +21,13 @@ nk_build_edl_files (
 add_executable          (${PROJECT_NAME} source/entity.cpp source/main.cpp ${EDL_FILES})
 add_dependencies        (${PROJECT_NAME} crypto_module_edl)
 target_compile_features (${PROJECT_NAME} PRIVATE cxx_std_17)
-target_link_libraries   (${PROJECT_NAME} picosha2)
+target_link_libraries   (${PROJECT_NAME} picosha2 Common)
 
 target_include_directories (
     ${PROJECT_NAME}
     PRIVATE
+        ${CMAKE_SOURCE_DIR}/common/include
+        ${CMAKE_SOURCE_DIR}/auth_service/crypto_module/PicoSHA2
         ${CMAKE_SOURCE_DIR}/auth_service/crypto_module/entity/include)
 
 set_target_properties (

@@ -1,4 +1,6 @@
 #include "entity.hpp"
+#include "picosha2.h"
+#include "utils.hpp"
 
 #include <nas/CryptoModuleEntity.edl.h>
 
@@ -82,11 +84,15 @@ Retcode CryptoModuleEntity::Run() noexcept
 
 nk_err_t CryptoModuleEntity::GetSHA256HashImpl(
     [[maybe_unused]] nas_CryptoModule* self,
-    [[maybe_unused]] const nas_CryptoModule_GetSHA256Hash_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_CryptoModule_GetSHA256Hash_res* res,
-    [[maybe_unused]] nk_arena* resArena)
+    const nas_CryptoModule_GetSHA256Hash_req* req,
+    const nk_arena* reqArena,
+    nas_CryptoModule_GetSHA256Hash_res* res,
+    nk_arena* resArena)
 {
+    const auto str{utils::GetArenaString(reqArena, &req->str)};
+
+    res->rc = utils::StringToArena(picosha2::hash256_hex_string(str), resArena, &res->hash);
+
     return NK_EOK;
 }
 
