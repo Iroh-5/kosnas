@@ -49,6 +49,18 @@ entities:
     id: CredStorageWriterConnection
   - target: nas.CryptoModuleEntity
     id: CryptoModuleConnection
+  - target: nas.FsReaderEntity
+    id: FsReaderConnection
+  - target: nas.FsWriterEntity
+    id: FsWriterConnection
 @INIT_GatewayEntity_ENTITY_CONNECTIONS+@
+
+- name: nas.KlogEntity
+  path: @KlogEntityTarget@
+  connections:
+  - target: nas.KlogStorageEntity
+    id: {var: KLOG_STORAGE_SERVER_CONNECTION_ID, include: klog_storage/client.h}
+
+- name: nas.KlogStorageEntity
 
 @INIT_EXTERNAL_ENTITIES@

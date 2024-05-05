@@ -18,14 +18,16 @@ nk_build_edl_files (
     NK_MODULE "nas"
     EDL "${CMAKE_SOURCE_DIR}/res/FsReaderEntity.edl")
 
-add_executable             (${PROJECT_NAME} source/entity.cpp source/main.cpp ${EDL_FILES})
-add_dependencies           (${PROJECT_NAME} ${VFS_SERVER_TARGET} fs_reader_edl)
-target_compile_features    (${PROJECT_NAME} PRIVATE cxx_std_17)
-target_link_libraries      (${PROJECT_NAME} FsReaderLib)
+add_executable          (${PROJECT_NAME} source/entity.cpp source/main.cpp ${EDL_FILES})
+add_dependencies        (${PROJECT_NAME} ${VFS_SERVER_TARGET} fs_reader_edl)
+target_compile_features (${PROJECT_NAME} PRIVATE cxx_std_17)
+target_link_libraries   (${PROJECT_NAME} FsReaderLib Common)
 
 target_include_directories (
     ${PROJECT_NAME}
     PRIVATE
+        ${CMAKE_SOURCE_DIR}/common/include
+        ${CMAKE_SOURCE_DIR}/fs_service/common/include
         ${CMAKE_SOURCE_DIR}/fs_service/fs_reader/lib/include
         ${CMAKE_SOURCE_DIR}/fs_service/fs_reader/entity/include)
 

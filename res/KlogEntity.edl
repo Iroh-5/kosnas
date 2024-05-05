@@ -1,0 +1,6 @@
+entity nas.KlogEntity
+
+components
+{
+    klog : kl.Klog
+}

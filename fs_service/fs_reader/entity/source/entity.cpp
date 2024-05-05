@@ -1,11 +1,16 @@
 #include "entity.hpp"
+#include "fs_reader.hpp"
+#include "utils.hpp"
 
+#include <nas/CommonTypes.idl.h>
 #include <nas/FsReaderEntity.edl.h>
 
 #include <coresrv/nk/transport-kos.h>
 #include <coresrv/sl/sl_api.h>
 
 #include <kos/trace.h>
+
+#include <string>
 
 namespace nas {
 
@@ -84,31 +89,52 @@ Retcode FsReaderEntity::Run() noexcept
 
 nk_err_t FsReaderEntity::InitImpl(
     [[maybe_unused]] nas_FsReader* self,
-    [[maybe_unused]] const nas_FsReader_Init_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_FsReader_Init_res* res,
+    const nas_FsReader_Init_req* req,
+    const nk_arena* reqArena,
+    nas_FsReader_Init_res* res,
     [[maybe_unused]] nk_arena* resArena)
 {
+    const auto dirPath{utils::GetArenaString(reqArena, &req->filePathString)};
+
+    res->rc = FsReader::Get().Init(dirPath);
+
     return NK_EOK;
 }
 
 nk_err_t FsReaderEntity::InitiateFileTransmissionImpl(
     [[maybe_unused]] nas_FsReader* self,
-    [[maybe_unused]] const nas_FsReader_InitiateFileTransmission_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_FsReader_InitiateFileTransmission_res* res,
+    const nas_FsReader_InitiateFileTransmission_req* req,
+    const nk_arena* reqArena,
+    nas_FsReader_InitiateFileTransmission_res* res,
     [[maybe_unused]] nk_arena* resArena)
 {
+    const auto filePath{utils::GetArenaString(reqArena, &req->filePathString)};
+
+    std::size_t fileSize{0};
+    res->rc = FsReader::Get().InitiateFileTransmission(filePath, fileSize);
+
+    res->fileSize = static_cast<std::uint32_t>(fileSize);
+
     return NK_EOK;
 }
 
 nk_err_t FsReaderEntity::TransmitFileDataImpl(
     [[maybe_unused]] nas_FsReader* self,
-    [[maybe_unused]] const nas_FsReader_TransmitFileData_req* req,
+    const nas_FsReader_TransmitFileData_req* req,
     [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_FsReader_TransmitFileData_res* res,
-    [[maybe_unused]] nk_arena* resArena)
+    nas_FsReader_TransmitFileData_res* res,
+    nk_arena* resArena)
 {
+    std::string fileData;
+    fileData.resize(nas_CommonTypes_DataBufferSize);
+
+    res->rc = FsReader::Get().TransmitFileData(fileData, req->dataSize);
+
+    if (utils::StringToArena(fileData, resArena, &res->dataBuffer) != rcOk)
+    {
+        res->rc = rcFail;
+    }
+
     return NK_EOK;
 }
 

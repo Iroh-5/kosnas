@@ -6,7 +6,7 @@ typedef UInt32 SizeT;
 const UInt16 FilePathStringSize = 512;
 typedef string<FilePathStringSize> FilePathString;
 
-const UInt16 DataBufferSize = 1024;
+const UInt32 DataBufferSize = 1024;
 typedef string<DataBufferSize> DataBuffer;
 
 const UInt8 UserNameStringSize = 128;

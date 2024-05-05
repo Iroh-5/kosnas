@@ -90,6 +90,11 @@ nk_err_t CryptoModuleEntity::GetSHA256HashImpl(
     nk_arena* resArena)
 {
     const auto str{utils::GetArenaString(reqArena, &req->str)};
+    if (str.empty())
+    {
+        res->rc = rcFail;
+        return NK_EOK;
+    }
 
     res->rc = utils::StringToArena(picosha2::hash256_hex_string(str), resArena, &res->hash);
 

@@ -48,7 +48,7 @@ try
         return rcFail;
     }
 
-    m_currentFileSize = fs::file_size(GetFullFilePath(filePath)) - 1;
+    m_currentFileSize = fs::file_size(GetFullFilePath(filePath));
     m_currentState    = State::FILE_TRANSMISSION;
 
     fileSize = m_currentFileSize;
@@ -61,11 +61,9 @@ catch (const std::exception& e)
     return rcFail;
 }
 
-Retcode FsReader::TransmitFileData(std::vector<std::uint8_t>& data, std::size_t dataSize) noexcept
+Retcode FsReader::TransmitFileData(std::string& data, std::size_t dataSize) noexcept
 try
 {
-    // TODO: Check that dataSize <= max data size which can be transferred via IPC
-
     if (m_currentState != State::FILE_TRANSMISSION)
     {
         DEBUG(FS_READER, "%s was called in invalid state (%d)", __func__, static_cast<int>(m_currentState));

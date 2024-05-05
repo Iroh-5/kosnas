@@ -1,0 +1,6 @@
+entity nas.KlogStorageEntity
+
+components
+{
+    klogStorage : kl.KlogStorage
+}

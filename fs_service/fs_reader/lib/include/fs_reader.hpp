@@ -6,8 +6,8 @@
 
 #include <cstdint>
 #include <filesystem>
+#include <string>
 #include <string_view>
-#include <vector>
 
 namespace nas {
 
@@ -20,7 +20,7 @@ public:
     Retcode Init(const fs::path& dirPath) noexcept;
 
     Retcode InitiateFileTransmission(const fs::path& filePath, std::size_t& fileSize) noexcept;
-    Retcode TransmitFileData(std::vector<std::uint8_t>& data, std::size_t dataSize) noexcept;
+    Retcode TransmitFileData(std::string& data, std::size_t dataSize) noexcept;
 
 private:
     FsReader() = default;

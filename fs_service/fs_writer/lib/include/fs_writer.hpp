@@ -6,9 +6,9 @@
 
 #include <cstdint>
 #include <filesystem>
+#include <string>
 #include <string_view>
 #include <unordered_map>
-#include <vector>
 
 namespace nas {
 
@@ -21,7 +21,7 @@ public:
     Retcode Init(const fs::path& dirPath, std::size_t maxSpacePerPart = 1'000'000) noexcept;
 
     Retcode InitiateFileReceit(const fs::path& filePath, std::size_t fileSize) noexcept;
-    Retcode ReceiveFileData(const std::vector<std::uint8_t>& data) noexcept;
+    Retcode ReceiveFileData(const std::string& data) noexcept;
 
 private:
     FsWriter() = default;

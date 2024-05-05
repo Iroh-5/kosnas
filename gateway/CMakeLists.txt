@@ -6,8 +6,9 @@ nk_build_edl_files (
     EDL "${CMAKE_SOURCE_DIR}/res/GatewayEntity.edl")
 
 set (SOURCES
+    source/proxy_base.cpp
     source/auth_service_proxy.cpp
-    source/main.cpp)
+    source/fs_service_proxy.cpp)
 
 add_executable          (${PROJECT_NAME} ${SOURCES} ${EDL_FILES})
 add_dependencies        (${PROJECT_NAME} gateway_edl)

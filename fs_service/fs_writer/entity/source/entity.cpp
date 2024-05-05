@@ -1,4 +1,6 @@
 #include "entity.hpp"
+#include "fs_writer.hpp"
+#include "utils.hpp"
 
 #include <nas/FsWriterEntity.edl.h>
 
@@ -84,31 +86,49 @@ Retcode FsWriterEntity::Run() noexcept
 
 nk_err_t FsWriterEntity::InitImpl(
     [[maybe_unused]] nas_FsWriter* self,
-    [[maybe_unused]] const nas_FsWriter_Init_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_FsWriter_Init_res* res,
+    const nas_FsWriter_Init_req* req,
+    const nk_arena* reqArena,
+    nas_FsWriter_Init_res* res,
     [[maybe_unused]] nk_arena* resArena)
 {
+    const auto dirPath{utils::GetArenaString(reqArena, &req->dirPath)};
+    if (dirPath.empty())
+    {
+        res->rc = rcFail;
+        return NK_EOK;
+    }
+
+    res->rc = FsWriter::Get().Init(dirPath);
+
     return NK_EOK;
 }
 
 nk_err_t FsWriterEntity::InitiateFileReceitImpl(
     [[maybe_unused]] nas_FsWriter* self,
-    [[maybe_unused]] const nas_FsWriter_InitiateFileReceit_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_FsWriter_InitiateFileReceit_res* res,
+    const nas_FsWriter_InitiateFileReceit_req* req,
+    const nk_arena* reqArena,
+    nas_FsWriter_InitiateFileReceit_res* res,
     [[maybe_unused]] nk_arena* resArena)
 {
+    const auto filePath{utils::GetArenaString(reqArena, &req->filePathString)};
+    const auto fileSize{req->fileSize};
+
+    res->rc = FsWriter::Get().InitiateFileReceit(filePath, fileSize);
+
     return NK_EOK;
 }
 
 nk_err_t FsWriterEntity::ReceiveFileDataImpl(
     [[maybe_unused]] nas_FsWriter* self,
-    [[maybe_unused]] const nas_FsWriter_ReceiveFileData_req* req,
-    [[maybe_unused]] const nk_arena* reqArena,
-    [[maybe_unused]] nas_FsWriter_ReceiveFileData_res* res,
+    const nas_FsWriter_ReceiveFileData_req* req,
+    const nk_arena* reqArena,
+    nas_FsWriter_ReceiveFileData_res* res,
     [[maybe_unused]] nk_arena* resArena)
 {
+    const auto fileData{utils::GetArenaString(reqArena, &req->dataBuffer)};
+
+    res->rc = FsWriter::Get().ReceiveFileData(fileData);
+
     return NK_EOK;
 }
 

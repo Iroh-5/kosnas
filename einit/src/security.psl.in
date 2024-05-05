@@ -1,6 +1,8 @@
 execute: kl.core.Execute
 
 use nk.base._
+use nk.struct._
+use nk.hashset._
 
 use EDL Einit
 use EDL kl.core.Core
@@ -13,15 +15,72 @@ use EDL nas.FsVfs
 use EDL nas.CredStorageVfs
 use EDL nas.CryptoModuleEntity
 use EDL nas.GatewayEntity
+use EDL nas.KlogEntity
+use EDL nas.KlogStorageEntity
 
 @INIT_EXTERNAL_ENTITIES@
+
+policy object users : HashSet {
+    type Value = Text
+
+    config = {
+        set_size = 1024,
+        pool_size = 1
+    }
+}
+
+audit profile trace = {
+    0: {
+        base: {
+            kss: ["denied"]
+        },
+        users: {
+            kss: ["denied"],
+            omit: []
+        }
+    }
+}
+
+audit default = trace 0
 
 execute {
     grant ()
 }
 
+execute dst=nas.GatewayEntity {
+    users.init {sid: dst_sid}
+}
+
 request {
     grant ()
+}
+
+request src=nas.GatewayEntity dst=nas.FsWriterEntity interface=nas.FsWriter method=Init {
+    users.contains {sid: src_sid, message.username}
+}
+
+request src=nas.GatewayEntity dst=nas.FsReaderEntity interface=nas.FsReader method=Init {
+    users.contains {sid: src_sid, message.username}
+}
+
+response src=nas.CredStorageReaderEntity dst=nas.GatewayEntity interface=nas.CredStorageReader method=Authenticate {
+    users.add {sid: dst_sid, entry: message.username}
+}
+
+request src=nas.FsWriterEntity dst=nas.FsVfs interface=kl.VfsFilesystem method=Read {
+    deny ()
+}
+
+request src=nas.FsReaderEntity dst=nas.FsVfs interface=kl.VfsFilesystem method=Write {
+    deny ()
+}
+
+request src=nas.CredStorageWriterEntity dst=nas.CredStorageVfs interface=kl.VfsFilesystem method=Read {
+    deny ()
+}
+
+request src=nas.CredStorageReaderEntity dst=nas.CredStorageVfs interface=kl.VfsFilesystem method=Write {
+    deny ()
 }
 
 response {

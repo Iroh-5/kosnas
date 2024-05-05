@@ -22,17 +22,20 @@ Retcode FsWriter::Init(const fs::path& dirPath, std::size_t maxSpacePerPart) noe
     rtl_assert(maxSpacePerPart > 0u);
     rtl_assert(!dirPath.has_filename());
 
-    std::error_code ec;
-    if (!fs::create_directory(dirPath, ec))
+    if (!fs::exists(dirPath))
     {
-        ERROR(FS_WRITER, "Could not create directory %s", dirPath.c_str());
-        return rcFail;
-    }
+        std::error_code ec;
+        if (!fs::create_directory(dirPath, ec))
+        {
+            ERROR(FS_WRITER, "Could not create directory %s", dirPath.c_str());
+            return rcFail;
+        }
 
-    if (ec)
-    {
-        ERROR(FS_WRITER, "fs::create_directory failed: %s", ec.message().c_str());
-        return rcFail;
+        if (ec)
+        {
+            ERROR(FS_WRITER, "fs::create_directory failed: %s", ec.message().c_str());
+            return rcFail;
+        }
     }
 
     m_maxSpacePerPart = maxSpacePerPart;
@@ -74,7 +77,7 @@ catch (const std::exception& e)
     return rcFail;
 }
 
-Retcode FsWriter::ReceiveFileData(const std::vector<std::uint8_t>& data) noexcept
+Retcode FsWriter::ReceiveFileData(const std::string& data) noexcept
 try
 {
     if (m_currentState != State::FILE_RECEIT)

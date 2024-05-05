@@ -21,11 +21,13 @@ nk_build_edl_files (
 add_executable          (${PROJECT_NAME} source/entity.cpp source/main.cpp ${EDL_FILES})
 add_dependencies        (${PROJECT_NAME} ${VFS_SERVER_TARGET} fs_writer_edl)
 target_compile_features (${PROJECT_NAME} PRIVATE cxx_std_17)
-target_link_libraries   (${PROJECT_NAME} FsWriterLib)
+target_link_libraries   (${PROJECT_NAME} FsWriterLib Common)
 
 target_include_directories (
     ${PROJECT_NAME}
     PRIVATE
+        ${CMAKE_SOURCE_DIR}/common/include
+        ${CMAKE_SOURCE_DIR}/fs_service/common/include
         ${CMAKE_SOURCE_DIR}/fs_service/fs_writer/lib/include
         ${CMAKE_SOURCE_DIR}/fs_service/fs_writer/entity/include)
 

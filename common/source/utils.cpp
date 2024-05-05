@@ -4,7 +4,7 @@
 
 namespace nas::utils {
 
-std::string GetArenaString(const nk_arena *arena, const nk_ptr_t *src)
+std::string GetArenaString(const nk_arena* arena, const nk_ptr_t* src)
 {
     nk_uint32_t msgLength = 0;
 
@@ -13,9 +13,9 @@ std::string GetArenaString(const nk_arena *arena, const nk_ptr_t *src)
     return nkMsg != nullptr ? nkMsg : "";
 }
 
-Retcode StringToArena(const std::string &str, nk_arena *arena, nk_ptr_t *dst)
+Retcode StringToArena(const std::string& str, nk_arena* arena, nk_ptr_t* dst)
 {
-    nk_char_t *nk_str = nk_arena_alloc(nk_char_t, arena, dst, str.length() + 1);
+    nk_char_t* nk_str = nk_arena_alloc(nk_char_t, arena, dst, str.length() + 1);
     if (nk_str == nullptr)
     {
         return rcOutOfMemory;
