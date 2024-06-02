@@ -13,9 +13,15 @@ CredStorageWriter& CredStorageWriter::Get()
     return instance;
 }
 
-Retcode CredStorageWriter::AddAuthEntry(const std::string& username, const std::string& passHash) noexcept
+Retcode CredStorageWriter::AddAuthEntry(const std::string& username, const std::string& password) noexcept
 try
 {
+    if (const auto rc{GetPasswordHash(password)}; rc != rcOk)
+    {
+        ERROR(CRED_STORAGE_READER, "Could not get hash for {}", password.c_str());
+        return rcFail;
+    }
+
     std::ofstream hashFile{username, std::ios::out | std::ios::trunc};
     if (!hashFile.is_open())
     {

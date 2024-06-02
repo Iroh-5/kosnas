@@ -18,9 +18,15 @@ CredStorageReader& CredStorageReader::Get()
     return instance;
 }
 
-Retcode CredStorageReader::Authenticate(const std::string& username,  const std::string& passHash) noexcept
+Retcode CredStorageReader::Authenticate(const std::string& username,  const std::string& password) noexcept
 try
 {
+    if (const auto rc{GetPasswordHash(password)}; rc != rcOk)
+    {
+        ERROR(CRED_STORAGE_READER, "Could not get hash for {}", password.c_str());
+        return rcFail;
+    }
+
     const auto hashFilePath{fs::path{username}};
 
     if (!fs::exists(hashFilePath))
