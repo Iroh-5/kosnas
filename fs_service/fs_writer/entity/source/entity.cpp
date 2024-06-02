@@ -32,7 +32,6 @@ Retcode FsWriterEntity::Run() noexcept
     NkKosTransport_Init(&transport, connHandle, nullptr, 0);
 
     nas_FsWriter_ops entityOps{
-        .Init               = &FsWriterEntity::InitImpl,
         .InitiateFileReceit = &FsWriterEntity::InitiateFileReceitImpl,
         .ReceiveFileData    = &FsWriterEntity::ReceiveFileDataImpl
     };
