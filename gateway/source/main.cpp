@@ -18,7 +18,10 @@ void ProcessConnection(tcp::socket& sock)
             sock.read_some(boost::asio::buffer(usernameBuf), ec);
             sock.read_some(boost::asio::buffer(passwordBuf), ec);
 
-            RegisterUserImpl(usernameBuf, passwordBuf);
+            if (const auto rc{RegisterUserProxyImpl(usernameBuf, passwordBuf)}; rc != rcOk)
+            {
+                ReportErrorToUser(sock, rc);
+            }
         }
         else if (command == "Authenticate User")
         {
@@ -28,7 +31,10 @@ void ProcessConnection(tcp::socket& sock)
             sock.read_some(boost::asio::buffer(usernameBuf), ec);
             sock.read_some(boost::asio::buffer(passwordBuf), ec);
 
-            AuthenticateUserImpl(usernameBuf, passwordBuf);
+            if (const auto rc{AuthenticateUserImpl(usernameBuf, passwordBuf)}; rc != rcOk)
+            {
+                ReportErrorToUser(sock, rc);
+            }
         }
         else if (command == "Read File")
         {
@@ -36,15 +42,35 @@ void ProcessConnection(tcp::socket& sock)
 
             sock.read_some(boost::asio::buffer(filenameBuf), ec);
 
-            ReadFileImpl(sock, filenameBuf);
+            std::string fileData;
+            if (const auto rc{ReadFileImpl(filenameBuf, fileData)}; rc != rcOk)
+            {
+                ReportErrorToUser(sock, rc);
+            }
         }
         else if (command == "Write File")
         {
             std::string filenameBuf;
+            std::string filesizeBuf;
 
             sock.read_some(boost::asio::buffer(filenameBuf), ec);
+            sock.read_some(boost::asio::buffer(filesizeBuf), ec);
 
-            WriteFileImpl(sock, filenameBuf);
+            std::string fileData;
+            const auto fileSize{std::stol(filesizeBuf)};
+            while (fileSize > 0)
+            {
+                std::string dataBuf;
+                sock.read_some(boost::asio::buffer(fileData), ec);
+
+                fileData += dataBuf;
+                fileSize -= dataBuf.size();
+            }
+
+            if (const auto rc{WriteFileImpl(filenameBuf, fileData)}; rc != rcOk)
+            {
+                ReportErrorToUser(sock, rc);
+            }
         }
         else
         {
